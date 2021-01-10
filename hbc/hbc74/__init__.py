@@ -17,18 +17,26 @@ class HBC74:
     def __init__(self, f):
         self.obj = parse(f)
 
+    def getObj():
+        return self.obj
+
     def getVersion(self):
         return 74    
 
     def getHeader(self):
         return self.obj["header"]
 
+    def getFunctionCount(self):
+        return self.obj["header"]["functionCount"]
+
     def getFunction(self, fid):
-        assert fid >= 0 and fid < self.obj["header"]["functionCount"], "Invalid function ID"
+        assert fid >= 0 and fid < self.getFunctionCount(), "Invalid function ID"
 
         functionHeader = self.obj["functionHeaders"][fid]
         offset = functionHeader["offset"]
         paramCount = functionHeader["paramCount"]
+        registerCount = functionHeader["frameSize"]
+        symbolCount = functionHeader["environmentSize"]
         bytecodeSizeInBytes = functionHeader["bytecodeSizeInBytes"]
         functionName = functionHeader["functionName"]
 
@@ -39,10 +47,13 @@ class HBC74:
 
         functionNameStr = self.getString(functionName)
 
-        return functionNameStr, paramCount, inst, functionHeader
+        return functionNameStr, paramCount, registerCount, symbolCount, inst, functionHeader
+
+    def getStringCount(self):
+        return self.obj["header"]["stringCount"]
 
     def getString(self, sid):
-        assert sid >= 0 and sid < self.obj["header"]["stringCount"], "Invalid string ID"
+        assert sid >= 0 and sid < self.getStringCount(), "Invalid string ID"
 
         stringTableEntry = self.obj["stringTableEntries"][sid]
         stringStorage = self.obj["stringStorage"]
@@ -98,8 +109,11 @@ class HBC74:
         
         return type, val, ind
 
+    def getArrayBufferSize(self):
+        return self.obj["header"]["arrayBufferSize"]
+
     def getArray(self, aid):
-        assert aid >= 0 and aid < self.obj["header"]["arrayBufferSize"], "Invalid string ID"
+        assert aid >= 0 and aid < self.getArrayBufferSize(), "Invalid Array ID"
         tag = self._checkBufferTag(self.obj["arrayBuffer"], aid)
         ind = 2 if tag[0] > 0x0f else 1
         arr = []
@@ -109,8 +123,11 @@ class HBC74:
         
         return type, arr
 
+    def getObjKeyBufferSize(self):
+        return self.obj["header"]["objKeyBufferSize"]
+
     def getObjKey(self, kid):
-        assert kid >= 0 and kid < self.obj["header"]["objKeyBufferSize"], "Invalid string ID"
+        assert kid >= 0 and kid < self.getObjKeyBufferSize(), "Invalid ObjKey ID"
         tag = self._checkBufferTag(self.obj["objKeyBuffer"], kid)
         ind = 2 if tag[0] > 0x0f else 1
         keys = []
@@ -120,8 +137,11 @@ class HBC74:
         
         return type, keys
 
+    def getObjValueBufferSize(self):
+        return self.obj["header"]["objValueBufferSize"]
+
     def getObjValue(self, vid):
-        assert vid >= 0 and vid < self.obj["header"]["objValueBufferSize"], "Invalid string ID"
+        assert vid >= 0 and vid < self.getObjValueBufferSize(), "Invalid ObjValue ID"
         tag = self._checkBufferTag(self.obj["objValueBuffer"], vid)
         ind = 2 if tag[0] > 0x0f else 1
         keys = []
