@@ -1,5 +1,5 @@
 
-from .parser import parse
+from .parser import parse, INVALID_LENGTH
 from .translator import disassemble
 from struct import pack, unpack
 
@@ -60,12 +60,18 @@ class HBC74:
 
         stringTableEntry = self.obj["stringTableEntries"][sid]
         stringStorage = self.obj["stringStorage"]
+        stringTableOverflowEntries = self.obj["stringTableOverflowEntries"]
+
 
         offset = stringTableEntry["offset"]
         length = stringTableEntry["length"]
 
-        s = bytes(stringStorage[offset:offset + length])
+        if length >= INVALID_LENGTH:
+            stringTableOverflowEntry = stringTableOverflowEntries[offset]
+            offset = stringTableOverflowEntry["offset"]
+            length = stringTableOverflowEntry["length"]
 
+        s = bytes(stringStorage[offset:offset + length])
         return s
 
     def _checkBufferTag(self, buf, iid):

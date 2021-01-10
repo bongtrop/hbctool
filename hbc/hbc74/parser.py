@@ -7,6 +7,9 @@ basepath = pathlib.Path(__file__).parent.absolute()
 MAGIC = 2240826417119764422
 BYTECODE_ALIGNMENT = 4
 
+INVALID_OFFSET = (1 << 23)
+INVALID_LENGTH = (1 << 8) - 1
+
 def align(f):
     f.pad(BYTECODE_ALIGNMENT)
 
