@@ -8,6 +8,8 @@ class BitWriter(object):
         self.accumulator = 0
         self.bcount = 0
         self.out = f
+        self.write = 0
+        self.remained = 0
 
     def __enter__(self):
         return self
@@ -21,29 +23,68 @@ class BitWriter(object):
         except ValueError:   # I/O operation on closed file.
             pass
 
-    def _writebit(self, bit):
-        if self.bcount == 8:
-            self.flush()
-        if bit > 0:
-            self.accumulator |= 1 << 7-self.bcount
+    def _writebit(self, bit, remaining=-1):
+        if remaining > -1:
+            self.accumulator |= bit << (remaining - 1)
+        else:
+            self.accumulator |= bit << (7 - self.bcount + self.remained)
+        
         self.bcount += 1
 
-    def writebits(self, bits, n):
+        if self.bcount == 8:
+            self.flush()
+
+    def _clearbits(self, remaining):
+        self.remained = remaining
+    
+    def _writebyte(self, b):
+        assert not self.bcount, "bcount is not zero."
+        self.out.write(bytes([b]))
+        self.write += 1
+
+    def writebits(self, v, n, remained=False):
+        i = n
+        while i > 0:
+            self._writebit((v & (1 << i-1)) >> (i-1), remaining=(i if remained else -1))
+            i -= 1
+        
+        if remained:
+            self._clearbits(n)
+
+    def writebytes(self, v, n):
         while n > 0:
-            self._writebit(bits & 1 << n-1)
+            self._writebyte(v & 0xff)
+            v = v >> 8
             n -= 1
+        
+        return v
 
     def flush(self):
-        self.out.write(bytearray([self.accumulator]))
+        self.out.write(bytes([self.accumulator]))
         self.accumulator = 0
         self.bcount = 0
+        self.remained = 0
+        self.write += 1
 
     def seek(self, i):
         self.input.seek(i)
+        self.write = i
 
     def tell(self):
-        self.input.tell()
+        return self.write
 
+    def pad(self, alignment):
+        assert alignment > 0 and alignment <= 8 and ((alignment & (alignment - 1)) == 0), "Support alignment as many as 8 bytes."
+        l = self.tell()
+        if l % alignment == 0:
+            return
+
+        b = alignment - (l % alignment)
+        self.writeall([0] * (b))
+    
+    def writeall(self, bs):
+        self.input.write(bytes(bs))
+        self.write += len(bs)
 
 class BitReader(object):
     def __init__(self, f):
@@ -65,8 +106,7 @@ class BitReader(object):
             if a:
                 self.accumulator = ord(a)
             self.bcount = 8
-            
-        
+
         if remaining > -1:
             assert remaining <= self.bcount, f"WTF ({remaining}, {self.bcount})"
             return (self.accumulator & (1 << remaining-1)) >> remaining-1
@@ -127,7 +167,7 @@ class BitReader(object):
         return list(a)
 
 # File utilization function
-
+# Read
 def readuint(f, bits=64, signed=False):
     assert bits % 8 == 0, "Not support"
     if bits == 8:
@@ -194,6 +234,61 @@ def read(f, format):
     else:
         return r
 
+# Write
+def writeuint(f, v, bits=64, signed=False):
+    assert bits % 8 == 0, "Not support"
+
+    if signed:
+        v += (1 << bits)
+
+    if bits == 8:
+        f.writebytes(v, 1)
+        return
+
+    s = 0
+    for _ in range(bits//8):
+        f.writebytes(v & 0xff, 1)
+        v = v >> 8
+        s += 8
+
+def writeint(f, v, bits=64):
+    return writeuint(f, v, bits, signed=True)
+
+def writebits(f, v, bits=8):
+    s = 0
+    if f.bcount % 8 != 0 and bits >= 8 - f.bcount:
+        l = 8 - f.bcount
+        f.writebits(v & ((1 << l) - 1), l)
+        v = v >> l
+        s += l
+        bits -= l
+        
+    for _ in range(bits//8):
+        f.writebits(v & 0xff, 8)
+        v = v >> 8
+        s += 8
+    
+    r = bits % 8
+    if r != 0:
+        f.writebits(v & ((1 << bits) - 1), r, remained=True)
+        v = v >> r
+        s+=r
+
+def write(f, v, format):
+    t = format[0]
+    bits = format[1]
+    n = format[2]
+
+    for i in range(n):
+        if t == "uint":
+            writeuint(f, v, bits=bits)
+        elif t == "int":
+            writeint(f, v, bits=bits)
+        elif t == "bit":
+            writebits(f, v, bits=bits)
+        else:
+            raise Exception(f"Data type {t} is not supported.")
+    
 # Unpacking
 def to_uint8(buf):
     return buf[0]
@@ -238,3 +333,88 @@ def from_double(val):
 def memcpy(dest, src, start, length):
     for i in range(length):
         dest[start + i] = src[i]
+
+
+class ByteIO:
+    def __init__(self, v=b""):
+        self.buf = v
+
+    def write(self, b):
+        self.buf += b
+
+    def read(self, n=-1):
+        if n==-1:
+            o = self.buf
+            self.buf = b""
+            return o
+        
+        o = self.buf[:n]
+        self.buf = self.buf[n:]
+        return o
+
+if __name__ == "__main__":
+    offset = 182856
+    paramCount = 1
+    bytecodeSizeInBytes = 12342
+    functionName = 3086
+
+    io = ByteIO()
+    fw = BitWriter(io)
+    fr = BitReader(io)
+
+    write(fw, offset, ["bit", 25, 1])
+    write(fw, paramCount, ["bit", 7, 1])
+    write(fw, bytecodeSizeInBytes, ["bit", 15, 1])
+    write(fw, functionName, ["bit", 17, 1])
+    
+    bs = io.read()
+    assert "48ca020236300706" == bs.hex()
+
+    isUTF16 = 0
+    offset = 465
+    length = 3
+
+    write(fw, isUTF16, ["bit", 1, 1])
+    write(fw, offset, ["bit", 23, 1])
+    write(fw, length, ["bit", 8, 1])
+    
+    bs = io.read()
+    assert "a2030003" == bs.hex()
+
+    io.write(bytes.fromhex("48ca020236300706"))
+
+    offset = read(fr, ["bit", 25, 1])
+    paramCount = read(fr, ["bit", 7, 1])
+    bytecodeSizeInBytes = read(fr, ["bit", 15, 1])
+    functionName = read(fr, ["bit", 17, 1])
+
+    assert offset == 182856
+    assert paramCount == 1
+    assert bytecodeSizeInBytes == 12342
+    assert functionName == 3086
+
+    io.write(bytes.fromhex("a2030003"))
+
+    isUTF16 = read(fr, ["bit", 1, 1])
+    offset = read(fr, ["bit", 23, 1])
+    length = read(fr, ["bit", 8, 1])
+
+    assert isUTF16 == 0
+    assert offset == 465
+    assert length == 3
+
+    isUTF16 = 1
+    offset = 465
+    length = 3
+
+    write(fw, isUTF16, ["bit", 1, 1])
+    write(fw, offset, ["bit", 23, 1])
+    write(fw, length, ["bit", 8, 1])
+
+    isUTF16 = read(fr, ["bit", 1, 1])
+    offset = read(fr, ["bit", 23, 1])
+    length = read(fr, ["bit", 8, 1])
+
+    assert isUTF16 == 1
+    assert offset == 465
+    assert length == 3
