@@ -1,5 +1,5 @@
 
-from reader import *
+from util import *
 from hbc.hbc74 import HBC74
 import json
 

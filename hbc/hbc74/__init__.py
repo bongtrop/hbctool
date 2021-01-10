@@ -39,7 +39,7 @@ class HBC74:
 
         functionNameStr = self.getString(functionName)
 
-        return functionNameStr, paramCount, inst
+        return functionNameStr, paramCount, inst, functionHeader
 
     def getString(self, sid):
         assert sid >= 0 and sid < self.obj["header"]["stringCount"], "Invalid string ID"
