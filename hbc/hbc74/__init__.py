@@ -48,7 +48,7 @@ class HBC74:
             inst = disassemble(inst)
         
 
-        functionNameStr = self.getString(functionName)
+        functionNameStr, _ = self.getString(functionName)
 
         return functionNameStr, paramCount, registerCount, symbolCount, inst, functionHeader
 
@@ -62,7 +62,7 @@ class HBC74:
         stringStorage = self.obj["stringStorage"]
         stringTableOverflowEntries = self.obj["stringTableOverflowEntries"]
 
-
+        isUTF16 = stringTableEntry["isUTF16"]
         offset = stringTableEntry["offset"]
         length = stringTableEntry["length"]
 
@@ -71,8 +71,11 @@ class HBC74:
             offset = stringTableOverflowEntry["offset"]
             length = stringTableOverflowEntry["length"]
 
+        if isUTF16:
+            length*=2
+
         s = bytes(stringStorage[offset:offset + length])
-        return s
+        return s.decode("utf-16" if isUTF16 else "utf-8"), (isUTF16, offset, length)
 
     def _checkBufferTag(self, buf, iid):
         keyTag = buf[iid]
@@ -126,11 +129,12 @@ class HBC74:
         tag = self._checkBufferTag(self.obj["arrayBuffer"], aid)
         ind = 2 if tag[0] > 0x0f else 1
         arr = []
+        t = None
         for _ in range(tag[0]):
-            type, val, ind = self._SLPToString(tag[1], self.obj["arrayBuffer"], aid, ind)
+            t, val, ind = self._SLPToString(tag[1], self.obj["arrayBuffer"], aid, ind)
             arr.append(val)
         
-        return type, arr
+        return t, arr
 
     def getObjKeyBufferSize(self):
         return self.obj["header"]["objKeyBufferSize"]
@@ -140,11 +144,12 @@ class HBC74:
         tag = self._checkBufferTag(self.obj["objKeyBuffer"], kid)
         ind = 2 if tag[0] > 0x0f else 1
         keys = []
+        t = None
         for _ in range(tag[0]):
-            type, val, ind = self._SLPToString(tag[1], self.obj["objKeyBuffer"], kid, ind)
+            t, val, ind = self._SLPToString(tag[1], self.obj["objKeyBuffer"], kid, ind)
             keys.append(val)
         
-        return type, keys
+        return t, keys
 
     def getObjValueBufferSize(self):
         return self.obj["header"]["objValueBufferSize"]
@@ -154,8 +159,9 @@ class HBC74:
         tag = self._checkBufferTag(self.obj["objValueBuffer"], vid)
         ind = 2 if tag[0] > 0x0f else 1
         keys = []
+        t = None
         for _ in range(tag[0]):
-            type, val, ind = self._SLPToString(tag[1], self.obj["objValueBuffer"], vid, ind)
+            t, val, ind = self._SLPToString(tag[1], self.obj["objValueBuffer"], vid, ind)
             keys.append(val)
         
-        return type, keys
+        return t, keys

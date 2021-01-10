@@ -15,7 +15,7 @@ def dump(hbc, path):
     for i in range(functionCount):
         functionName, paramCount, registerCount, symbolCount, insts, _ = hbc.getFunction(i)
         # Function<>1270(2 params, 1 registers, 0 symbols):
-        f.write(f"Function<{functionName.decode()}>{i}({paramCount} params, {registerCount} registers, {symbolCount} symbols):\n")
+        f.write(f"Function<{functionName}>{i}({paramCount} params, {registerCount} registers, {symbolCount} symbols):\n")
         for opcode, operands in insts:
             f.write(f"\t{opcode.ljust(20,' ')}\t")
             o = []
@@ -25,18 +25,13 @@ def dump(hbc, path):
                 o.append(f"{t}:{val}")
 
                 if is_str:
-                    s = hbc.getString(val)
+                    s, _ = hbc.getString(val)
                     ss.append((ii, val, s))
                     
             
             f.write(f"{', '.join(o)}\n")
             if len(ss) > 0:
                 for ii, val, s in ss:
-                    try:
-                        s = f"\"{s.decode()}\""
-                    except UnicodeDecodeError:
-                        s = f"hex({s.hex()})"
-
                     f.write(f"\t; Oper[{ii}]: String({val}) {s}\n")
 
                 f.write("\n")

@@ -1,6 +1,5 @@
-from hbc import parseFromFile
-import hasm
+import unittest
+from hbc.hbc74.test import TestHBC74
 
 if __name__ == "__main__":
-    hbc = parseFromFile(open("hbc/hbc74/example/index.android.bundle", "rb"))
-    hasm.dump(hbc, "output/test")
+    unittest.main()

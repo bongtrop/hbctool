@@ -2,6 +2,8 @@ import pathlib
 import json
 from util import *
 
+basepath = pathlib.Path(__file__).parent.absolute()
+
 operand_type = {
     "Reg8": (1, to_uint8, from_uint8),
     "Reg32": (4, to_uint32, from_uint32),
@@ -16,8 +18,9 @@ operand_type = {
 }
 
 def disassemble(inst):
-    basepath = pathlib.Path(__file__).parent.absolute()
-    opcode_operand = json.load(open(f"{basepath}/data/opcode.json", "r"))
+    f = open(f"{basepath}/data/opcode.json", "r")
+    opcode_operand = json.load(f)
+    f.close()
     opcode_mapper = list(opcode_operand.keys())
     i = 0
     rs = []
