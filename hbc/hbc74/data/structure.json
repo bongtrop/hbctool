@@ -34,6 +34,18 @@
         "highestWriteCacheIndex": ["bit", 8, 1],
         "flags": ["uint", 8, 1]
     },
+    "FuncHeader": {
+        "offset": ["uint", 32, 1],
+        "paramCount": ["uint", 32, 1],
+        "bytecodeSizeInBytes": ["uint", 32, 1],
+        "functionName": ["uint", 32, 1],
+        "infoOffset": ["uint", 32, 1],
+        "frameSize": ["uint", 32, 1],
+        "environmentSize": ["uint", 32, 1],
+        "highestReadCacheIndex": ["uint", 8, 1],
+        "highestWriteCacheIndex": ["uint", 8, 1],
+        "flags": ["uint", 8, 1]
+    },
     "SmallStringTableEntry": {
         "isUTF16": ["bit", 1, 1],
         "offset": ["bit", 23, 1],

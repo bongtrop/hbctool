@@ -14,7 +14,8 @@ def parse(f):
     structure = json.load(open(f"{basepath}/data/structure.json", "r"))
 
     headerS = structure["header"]
-    functionHeaderS = structure["SmallFuncHeader"]
+    smallFunctionHeaderS = structure["SmallFuncHeader"]
+    functionHeaderS = structure["FuncHeader"]
     stringTableEntryS = structure["SmallStringTableEntry"]
     overflowStringTableEntryS = structure["OverflowStringTableEntry"]
     stringStorageS = structure["StringStorage"]
@@ -37,11 +38,20 @@ def parse(f):
     
     # Segment 2: Function Header
     functionHeaders = []
-    for _ in range(header["functionCount"]):
+    for i in range(header["functionCount"]):
         functionHeader = {}
-        for key in functionHeaderS:
-            functionHeader[key] = read(f, functionHeaderS[key])
+        for key in smallFunctionHeaderS:
+            functionHeader[key] = read(f, smallFunctionHeaderS[key])
         
+        if (functionHeader["flags"] >> 5) & 1:
+            saved_pos = f.tell()
+            large_offset = (functionHeader["infoOffset"] << 16 )  | functionHeader["offset"]
+            f.seek(large_offset)
+            for key in functionHeaderS:
+                functionHeader[key] = read(f, functionHeaderS[key])
+
+            f.seek(saved_pos)
+
         functionHeaders.append(functionHeader)
 
     obj["functionHeaders"] = functionHeaders

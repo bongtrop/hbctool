@@ -17,7 +17,7 @@ class HBC74:
     def __init__(self, f):
         self.obj = parse(f)
 
-    def getObj():
+    def getObj(self):
         return self.obj
 
     def getVersion(self):
@@ -29,7 +29,7 @@ class HBC74:
     def getFunctionCount(self):
         return self.obj["header"]["functionCount"]
 
-    def getFunction(self, fid):
+    def getFunction(self, fid, disasm=True):
         assert fid >= 0 and fid < self.getFunctionCount(), "Invalid function ID"
 
         functionHeader = self.obj["functionHeaders"][fid]
@@ -43,7 +43,10 @@ class HBC74:
         instOffset = self.obj["instOffset"]
         start = offset - instOffset
         end = start + bytecodeSizeInBytes
-        inst = disassemble(self.obj["inst"][start:end])
+        inst = self.obj["inst"][start:end]
+        if disasm:
+            inst = disassemble(inst)
+        
 
         functionNameStr = self.getString(functionName)
 

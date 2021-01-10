@@ -31,7 +31,7 @@ def disassemble(inst):
             if is_str:
                 oper_t = oper_t[:-2]
                 
-            size, conv_to, conv_from = operand_type[oper_t]
+            size, conv_to, _ = operand_type[oper_t]
             val = conv_to(inst[i:i+size])
             r[1].append((oper_t, is_str, val))
             i+=size
