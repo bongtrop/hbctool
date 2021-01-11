@@ -4,9 +4,15 @@
 
 A command-line interface for disassembling and assembling the Hermes Bytecode. 
 
-Since React Native team created their own JavaScript engine (named Hermes) for running the React Native application, the JavaScript source code is compiled to the Hermes bytecode. In peneration test project, I found that some React Native applications have already been migrated to Hermes engine. It is really head for me to analyze or patch those applications. Therefore, I created this tool for helping any pentester to test the Hermes bytecode.
+Since React Native team created their own JavaScript engine (named Hermes) for running the React Native application, the JavaScript source code is often compiled to the Hermes bytecode. In peneration test project, I found that some React Native applications have already been migrated to Hermes engine. It is really head for me to analyze or patch those applications. Therefore, I created this tool for helping any pentester to test the Hermes bytecode.
 
 > [Hermes](https://hermesengine.dev/) is an open-source JavaScript engine optimized for running React Native apps on Android. For many apps, enabling Hermes will result in improved start-up time, decreased memory usage, and smaller app size. At this time Hermes is an opt-in React Native feature, and this guide explains how to enable it.
+
+Special thanks to [ErbaZZ](https://github.com/ErbaZZ) and [Jusmistic](https://github.com/Jusmistic) for helping me research and develop this tool.
+
+## Screenshot
+
+![hbctool Example](/image/hbctool_example.gif)
 
 ## Installation
 
@@ -57,6 +63,7 @@ Feel free to create an issue or submit the merge request. Anyway you want to con
 However, please run the unittest before submit the pull request.
 
 ```
+cd hbctool
 python test.py
 ```
 
@@ -65,3 +72,10 @@ I use poetry to build this tool, For building tool, simply execute:
 ```
 poetry install
 ```
+
+## Next Step
+
+- Add the other Hermes bytecode versions
+- Create a class abstraction
+- Support overflow patching
+- Do all TODO, NOTE, FIXME in source code

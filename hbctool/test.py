@@ -1,7 +1,7 @@
 import unittest
-from .util import *
-from .hbc.hbc74.test import TestHBC74
-from . import hbc, hasm
+from hbctool.util import *
+from hbctool.hbc.hbc74.test import TestHBC74
+from hbctool import hbc as hbcl, hasm
 import pathlib
 import json
 
@@ -19,7 +19,7 @@ class ByteIO:
             o = self.buf
             self.buf = b""
             return o
-        
+
         o = self.buf[:n]
         self.buf = self.buf[n:]
         return o
@@ -38,7 +38,7 @@ class TestFileUtilization(unittest.TestCase):
         write(fw, paramCount, ["bit", 7, 1])
         write(fw, bytecodeSizeInBytes, ["bit", 15, 1])
         write(fw, functionName, ["bit", 17, 1])
-        
+
         bs = io.read()
         self.assertEqual("48ca020236300706", bs.hex())
 
@@ -49,10 +49,10 @@ class TestFileUtilization(unittest.TestCase):
         write(fw, isUTF16, ["bit", 1, 1])
         write(fw, offset, ["bit", 23, 1])
         write(fw, length, ["bit", 8, 1])
-        
+
         bs = io.read()
         self.assertEqual("a2030003", bs.hex())
-    
+
     def test_bit_reader(self):
         io = ByteIO()
         fr = BitReader(io)
@@ -109,7 +109,7 @@ class TestParser(unittest.TestCase):
         f = open("/tmp/hbctool_test.android.bundle", "wb")
         hbcl.dump(hbc, f)
         f.close()
-        
+
         f = open("hbc/hbc74/example/index.android.bundle", "rb")
         a = f.read()
         f.close()
@@ -118,7 +118,7 @@ class TestParser(unittest.TestCase):
         f.close()
 
         self.assertEqual(a, b)
-    
+
     def test_hasm(self):
         f = open(f"{basepath}/hbc/hbc74/example/index.android.bundle", "rb")
         a = hbcl.load(f)
