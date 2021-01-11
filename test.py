@@ -129,5 +129,8 @@ class TestParser(unittest.TestCase):
 
         self.assertEqual(json.dumps(a.getObj()), json.dumps(b.getObj()))
 
-if __name__ == "__main__":
+def main():
     unittest.main()
+
+if __name__ == "__main__":
+    main()

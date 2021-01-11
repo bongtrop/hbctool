@@ -1,0 +1,31 @@
+[tool.poetry]
+name = "hbctool"
+version = "0.1.0"
+description = "A command-line interface for disassembling and assembling the Hermes Bytecode."
+authors = ["bongtrop"]
+keywords = ["hbc", "hermes", "bytecode", "reverse", "hacking"]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Natural Language :: English',
+    'License :: OSI Approved :: MIT License',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.6"
+docopt = "^0.6.2"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+hbctool = "hbctool:main"
