@@ -2,7 +2,7 @@
 
 [![Python 3.x](https://img.shields.io/badge/python-3.x-yellow.svg)](https://python.org) [![PyPI version](https://badge.fury.io/py/hbctool.svg)](https://badge.fury.io/py/hbctool) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
 
-A command-line interface for disassembling and assembling the Hermes Bytecode. 
+A command-line interface for disassembling and assembling the Hermes Bytecode.
 
 Since the React Native team created their own JavaScript engine (named Hermes) for running the React Native application, the JavaScript source code is often compiled to the Hermes bytecode. In the penetration test project, I found that some React Native applications have already been migrated to the Hermes engine. It is really head for me to analyze or patch those applications. Therefore, I created hbctool for helping any pentester to test the Hermes bytecode.
 
@@ -26,7 +26,7 @@ pip install hbctool
 
 ## Usage
 
-Please execute `hbctool --help` for showing the usage.
+Please run `hbctool --help` to show the usage.
 
 ```
 hbctool --help   
@@ -58,18 +58,22 @@ Examples:
 
 > For Android, the HBC file normally locates at `assets` directory with `index.android.bundle` filename.
 
+## Support
+
+hbctool currently supports only Hermes Bytecode version 74.
+
 ## Contribution
 
 Feel free to create an issue or submit the merge request. Anyway you want to contribute this project. I'm very happy about it.
 
-However, please run the unittest before submit the pull request.
+However, please run the unit test before submiting the pull request.
 
 ```
 cd hbctool
 python test.py
 ```
 
-I use poetry to build this tool, For building tool, simply execute:
+I use poetry to build this tool. To build it yourself, simply execute:
 
 ```
 poetry install
