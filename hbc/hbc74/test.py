@@ -1,4 +1,4 @@
-from hbc import parseFromFile
+import hbc as hbcl
 from .translator import assemble, disassemble
 import unittest
 import re
@@ -9,7 +9,7 @@ basepath = pathlib.Path(__file__).parent.absolute()
 class TestHBC74(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(TestHBC74, self).__init__(*args, **kwargs)
-        self.hbc = parseFromFile(open(f"{basepath}/example/index.android.bundle", "rb"))
+        self.hbc = hbcl.load(open(f"{basepath}/example/index.android.bundle", "rb"))
         self.objdump = open(f"{basepath}/example/objdump.out", "r").read()
         self.pretty = open(f"{basepath}/example/pretty.out", "r").read()
         self.raw = open(f"{basepath}/example/raw.out", "r").read()

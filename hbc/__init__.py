@@ -14,7 +14,7 @@ HBC = {
     74: HBC74
 }
 
-def parseFromFile(f):
+def load(f):
     f = BitReader(f)
     magic = read(f, INIT_HEADER["magic"])
     version = read(f, INIT_HEADER["version"])
@@ -24,3 +24,20 @@ def parseFromFile(f):
 
     return HBC[version](f)
 
+def loado(obj):
+    magic = obj["header"]["magic"]
+    version = obj["header"]["version"]
+
+    assert magic == MAGIC, f"The magic ({hex(magic)}) is invalid. (must be {hex(MAGIC)})"
+    assert version in HBC, f"The HBC version ({version}) is not supported."
+
+    hbc = HBC[version]()
+    hbc.setObj(obj)
+    return hbc
+
+def dump(hbc, f):
+    f = BitWriter(f)
+    hbc.export(f)
+
+def dumpo(hbc):
+    return hbc.getObj()

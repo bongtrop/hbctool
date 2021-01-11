@@ -1,6 +1,7 @@
 from util import *
 import json
 import pathlib
+import copy
 
 basepath = pathlib.Path(__file__).parent.absolute()
 
@@ -10,25 +11,25 @@ BYTECODE_ALIGNMENT = 4
 INVALID_OFFSET = (1 << 23)
 INVALID_LENGTH = (1 << 8) - 1
 
+structure = json.load(open(f"{basepath}/data/structure.json", "r"))
+
+headerS = structure["header"]
+smallFunctionHeaderS = structure["SmallFuncHeader"]
+functionHeaderS = structure["FuncHeader"]
+stringTableEntryS = structure["SmallStringTableEntry"]
+overflowStringTableEntryS = structure["OverflowStringTableEntry"]
+stringStorageS = structure["StringStorage"]
+arrayBufferS = structure["ArrayBuffer"]
+objKeyBufferS = structure["ObjKeyBuffer"]
+objValueBufferS = structure["ObjValueBuffer"]
+regExpTableEntryS = structure["RegExpTableEntry"]
+regExpStorageS = structure["RegExpStorage"]
+cjsModuleTableS = structure["CJSModuleTable"]
+
 def align(f):
     f.pad(BYTECODE_ALIGNMENT)
 
 def parse(f):
-    structure = json.load(open(f"{basepath}/data/structure.json", "r"))
-
-    headerS = structure["header"]
-    smallFunctionHeaderS = structure["SmallFuncHeader"]
-    functionHeaderS = structure["FuncHeader"]
-    stringTableEntryS = structure["SmallStringTableEntry"]
-    overflowStringTableEntryS = structure["OverflowStringTableEntry"]
-    stringStorageS = structure["StringStorage"]
-    arrayBufferS = structure["ArrayBuffer"]
-    objKeyBufferS = structure["ObjKeyBuffer"]
-    objValueBufferS = structure["ObjValueBuffer"]
-    regExpTableEntryS = structure["RegExpTableEntry"]
-    regExpStorageS = structure["RegExpStorage"]
-    cjsModuleTableS = structure["CJSModuleTable"]
-
     obj = {}
 
     # Segment 1: Header
@@ -47,6 +48,7 @@ def parse(f):
             functionHeader[key] = read(f, smallFunctionHeaderS[key])
         
         if (functionHeader["flags"] >> 5) & 1:
+            functionHeader["small"] = copy.deepcopy(functionHeader)
             saved_pos = f.tell()
             large_offset = (functionHeader["infoOffset"] << 16 )  | functionHeader["offset"]
             f.seek(large_offset)
@@ -54,7 +56,7 @@ def parse(f):
                 functionHeader[key] = read(f, functionHeaderS[key])
 
             f.seek(saved_pos)
-
+            
         functionHeaders.append(functionHeader)
 
     obj["functionHeaders"] = functionHeaders
@@ -165,3 +167,127 @@ def parse(f):
     obj["inst"] = f.readall()
 
     return obj
+
+def export(obj, f):
+    # Segment 1: Header
+    header = obj["header"]
+    for key in headerS:
+        write(f, header[key], headerS[key])
+    
+    align(f)
+    
+    overflowedFunctionHeaders = []
+    # Segment 2: Function Header
+    functionHeaders = obj["functionHeaders"]
+    for i in range(header["functionCount"]):
+        functionHeader = functionHeaders[i]
+        if "small" in functionHeader:
+            for key in smallFunctionHeaderS:
+                write(f, functionHeader["small"][key], smallFunctionHeaderS[key])
+            
+            overflowedFunctionHeaders.append(functionHeader)
+        
+        else:
+            for key in smallFunctionHeaderS:
+                write(f, functionHeader[key], smallFunctionHeaderS[key])
+
+    align(f)
+
+    # Segment 3: StringKind
+    # FIXME : Do nothing just skip
+    stringKinds = obj["stringKinds"]
+    for i in range(header["stringKindCount"]):
+        writeuint(f, stringKinds[i], bits=32)
+
+    align(f)
+
+    # Segment 3: IdentifierHash
+    # FIXME : Do nothing just skip
+    identifierHashes = obj["identifierHashes"]
+    for i in range(header["identifierCount"]):
+        writeuint(f, identifierHashes[i], bits=32)
+
+    align(f)
+
+    # Segment 4: StringTable
+    stringTableEntries = obj["stringTableEntries"]
+    for i in range(header["stringCount"]):
+        for key in stringTableEntryS:
+            stringTableEntry = stringTableEntries[i]
+            write(f, stringTableEntry[key], stringTableEntryS[key])
+
+    align(f)
+
+    # Segment 5: StringTableOverflow
+    stringTableOverflowEntries = obj["stringTableOverflowEntries"]
+    for i in range(header["overflowStringCount"]):
+        for key in overflowStringTableEntryS:
+            stringTableOverflowEntry = stringTableOverflowEntries[i]
+            write(f, stringTableOverflowEntry[key], overflowStringTableEntryS[key])
+
+    align(f)
+
+    # Segment 6: StringStorage
+    stringStorage = obj["stringStorage"]
+    stringStorageS[2] = header["stringStorageSize"]
+    write(f, stringStorage, stringStorageS)
+
+    align(f)
+
+    # Segment 7: ArrayBuffer
+    arrayBuffer = obj["arrayBuffer"]
+    arrayBufferS[2] = header["arrayBufferSize"]
+    write(f, arrayBuffer, arrayBufferS)
+
+    align(f)
+
+    # Segment 9: ObjKeyBuffer
+    objKeyBuffer = obj["objKeyBuffer"]
+    objKeyBufferS[2] = header["objKeyBufferSize"]
+    write(f, objKeyBuffer, objKeyBufferS)
+
+    align(f)
+
+    # Segment 10: ObjValueBuffer
+    objValueBuffer = obj["objValueBuffer"]
+    objValueBufferS[2] = header["objValueBufferSize"]
+    write(f, objValueBuffer, objValueBufferS)
+
+    align(f)
+
+    # Segment 11: RegExpTable
+    regExpTable = obj["regExpTable"]
+    for i in range(header["regExpCount"]):
+        regExpEntry = regExpTable[i]
+        for key in regExpTableEntryS:
+            write(f, regExpEntry[key], regExpTableEntryS[key])
+
+    align(f)    
+    
+    # Segment 12: RegExpStorage
+    regExpStorage = obj["regExpStorage"]
+    regExpStorageS[2] = header["regExpStorageSize"]
+    write(f, regExpStorage, regExpStorageS)
+
+    align(f)
+
+    # Segment 13: CJSModuleTable
+    cjsModuleTable = obj["cjsModuleTable"]
+    for i in range(header["cjsModuleCount"]):
+        cjsModuleEntry = cjsModuleTable[i]
+        for key in cjsModuleTableS:
+            write(f, cjsModuleEntry[key], cjsModuleTableS[key])
+        
+    align(f)
+
+    # Write remaining
+    f.writeall(obj["inst"])
+
+    # Write Overflowed Function Header
+    for overflowedFunctionHeader in overflowedFunctionHeaders:
+        smallFunctionHeader = overflowedFunctionHeader["small"]
+        large_offset = (smallFunctionHeader["infoOffset"] << 16 )  | smallFunctionHeader["offset"]
+        f.seek(large_offset)
+        for key in functionHeaderS:
+            write(f, overflowedFunctionHeader[key], functionHeaderS[key])
+

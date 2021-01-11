@@ -67,7 +67,7 @@ class BitWriter(object):
         self.write += 1
 
     def seek(self, i):
-        self.input.seek(i)
+        self.out.seek(i)
         self.write = i
 
     def tell(self):
@@ -83,7 +83,7 @@ class BitWriter(object):
         self.writeall([0] * (b))
     
     def writeall(self, bs):
-        self.input.write(bytes(bs))
+        self.out.write(bytes(bs))
         self.write += len(bs)
 
 class BitReader(object):
@@ -279,13 +279,16 @@ def write(f, v, format):
     bits = format[1]
     n = format[2]
 
+    if not isinstance(v, list):
+        v = [v]
+
     for i in range(n):
         if t == "uint":
-            writeuint(f, v, bits=bits)
+            writeuint(f, v[i], bits=bits)
         elif t == "int":
-            writeint(f, v, bits=bits)
+            writeint(f, v[i], bits=bits)
         elif t == "bit":
-            writebits(f, v, bits=bits)
+            writebits(f, v[i], bits=bits)
         else:
             raise Exception(f"Data type {t} is not supported.")
     
