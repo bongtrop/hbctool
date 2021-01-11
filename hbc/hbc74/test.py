@@ -1,4 +1,5 @@
 from hbc import parseFromFile
+from .translator import assemble, disassemble
 import unittest
 import re
 import pathlib
@@ -59,3 +60,11 @@ class TestHBC74(unittest.TestCase):
 
             # TODO : Implement this please
             # self.assertEqual(val, target_val)
+
+    def test_translator(self):
+        functionCount = self.hbc.getFunctionCount()
+
+        for i in range(functionCount):
+            _, _, _, _, bc, _ = self.hbc.getFunction(i, disasm=False)
+
+            self.assertEqual(assemble(disassemble(bc)), bc)

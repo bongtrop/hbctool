@@ -1,15 +1,36 @@
 from util import *
 import json
 import os
+import shutil
 
 def dump(hbc, path):
-    assert not os.path.exists(path), f"'{path}' exists."
+    if os.path.exists(path):
+        c = input(f"'{path}' exists. Do you want to remove it ? (y/n): ").strip()
+        if c == "y":
+            shutil.rmtree(path)
+        else:
+            exit(1337)
+
     os.makedirs(path)
     # Write all obj to metadata.json
-    json.dump(hbc.getObj(), open(f"{path}/metadata.json", "w"))
+    f = open(f"{path}/metadata.json", "w")
+    json.dump(hbc.getObj(), f)
+    f.close()
     
     stringCount = hbc.getStringCount()
     functionCount = hbc.getFunctionCount()
+
+    ss = []
+    for i in range(stringCount):
+        val, header = hbc.getString(i)
+        ss.append({
+            "id": i,
+            "value": val
+        })
+    
+    f = open(f"{path}/string.json", "w")
+    json.dump(ss, f, indent=4)
+    f.close()
 
     f = open(f"{path}/instruction.hasm", "w")
     for i in range(functionCount):
@@ -32,7 +53,7 @@ def dump(hbc, path):
             f.write(f"{', '.join(o)}\n")
             if len(ss) > 0:
                 for ii, val, s in ss:
-                    f.write(f"\t; Oper[{ii}]: String({val}) {s}\n")
+                    f.write(f"\t; Oper[{ii}]: String({val}) {repr(s)}\n")
 
                 f.write("\n")
 
