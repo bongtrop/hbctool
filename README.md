@@ -14,6 +14,8 @@ Special thanks to [ErbaZZ](https://github.com/ErbaZZ) and [Jusmistic](https://gi
 
 ![hbctool Example](/image/hbctool_example.gif)
 
+This video with MP4 format can be found at [/image/hbctool_example.mp4](/image/hbctool_example.mp4).
+
 ## Installation
 
 To install hbctool, simply use pip:
