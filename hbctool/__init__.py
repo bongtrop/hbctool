@@ -25,9 +25,7 @@ Examples:
     hbctool asm test_hasm index.android.bundle
 """
 from docopt import docopt
-import metadata
-import hbc
-import hasm
+from hbctool import metadata, hbc, hasm
 
 def disasm(hbcfile, hasmpath):
     print(f"[*] Disassemble '{hbcfile}' to '{hasmpath}' path")

@@ -1,4 +1,4 @@
-from util import *
+from hbctool.util import *
 from .parser import parse, export, INVALID_LENGTH
 from .translator import disassemble, assemble
 from struct import pack, unpack

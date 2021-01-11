@@ -1,8 +1,7 @@
 import unittest
-from util import *
-from hbc.hbc74.test import TestHBC74
-import hbc as hbcl
-import hasm
+from .util import *
+from .hbc.hbc74.test import TestHBC74
+from . import hbc, hasm
 import pathlib
 import json
 

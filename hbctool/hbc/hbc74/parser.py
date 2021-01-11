@@ -1,4 +1,4 @@
-from util import *
+from hbctool.util import *
 import json
 import pathlib
 import copy

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hbctool"
-version = "0.1.1"
+version = "0.1.2"
 description = "A command-line interface for disassembling and assembling the Hermes Bytecode."
 authors = ["bongtrop"]
 keywords = ["hbc", "hermes", "bytecode", "reverse", "hacking"]

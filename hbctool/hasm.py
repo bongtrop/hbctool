@@ -1,5 +1,5 @@
-from util import *
-import hbc as hbcl
+from .util import *
+import hbctool.hbc as hbcl
 import json
 import os
 import shutil

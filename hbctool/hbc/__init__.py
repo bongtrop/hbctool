@@ -1,6 +1,6 @@
 
-from util import *
-from hbc.hbc74 import HBC74
+from hbctool.util import *
+from hbctool.hbc.hbc74 import HBC74
 import json
 
 MAGIC = 2240826417119764422
