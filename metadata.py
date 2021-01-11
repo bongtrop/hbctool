@@ -1,7 +1,7 @@
 package = 'hbctool'
 project = 'hbctool'
 project_no_spaces = project.replace(' ', '')
-version = '0.1.0'
+version = '0.1.1'
 description = ('A command-line interface for disassembling and assembling'
                'the Hermes Bytecode')
 authors = ['bongtrop']
