@@ -33,8 +33,8 @@ def write_func(f, func, i, hbc):
 def dump(hbc, path, force=False):
     
     if os.path.exists(path) and not force:
-        c = input(f"'{path}' exists. Do you want to remove it ? (y/n): ").strip()
-        if c == "y":
+        c = input(f"'{path}' exists. Do you want to remove it ? (y/n): ").lower().strip()
+        if c[:1] == "y":
             shutil.rmtree(path)
         else:
             exit(1337)
