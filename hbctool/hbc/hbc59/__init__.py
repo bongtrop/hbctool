@@ -13,7 +13,7 @@ ByteStringTag = 6 << 4
 IntegerTag = 7 << 4
 TagMask = 0x70
 
-class HBC74:
+class HBC59:
     def __init__(self, f=None):
         if f:
             self.obj = parse(f)

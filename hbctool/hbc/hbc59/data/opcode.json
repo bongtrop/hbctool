@@ -449,7 +449,7 @@
         "Reg8"
     ],
     "Debugger": [],
-    "AsyncBreakCheck": [],
+    "DebuggerCheckBreak": [],
     "ProfilePoint": [
         "UInt16"
     ],
@@ -586,19 +586,6 @@
         "Reg8",
         "Reg8",
         "UInt32"
-    ],
-    "IteratorBegin": [
-        "Reg8",
-        "Reg8"
-    ],
-    "IteratorNext": [
-        "Reg8",
-        "Reg8",
-        "Reg8"
-    ],
-    "IteratorClose": [
-        "Reg8",
-        "UInt8"
     ],
     "Jmp": [
         "Addr8"

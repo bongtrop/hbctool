@@ -73,11 +73,11 @@ def parse(f):
 
     # Segment 3: IdentifierHash
     # FIXME : Do nothing just skip
-    identifierHashes = []
+    identifierTranslations = []
     for _ in range(header["identifierCount"]):
-        identifierHashes.append(readuint(f, bits=32))
+        identifierTranslations.append(readuint(f, bits=32))
     
-    obj["identifierHashes"] = identifierHashes
+    obj["identifierTranslations"] = identifierTranslations
     align(f)
 
     # Segment 4: StringTable
@@ -203,9 +203,9 @@ def export(obj, f):
 
     # Segment 3: IdentifierHash
     # FIXME : Do nothing just skip
-    identifierHashes = obj["identifierHashes"]
+    identifierTranslations = obj["identifierTranslations"]
     for i in range(header["identifierCount"]):
-        writeuint(f, identifierHashes[i], bits=32)
+        writeuint(f, identifierTranslations[i], bits=32)
 
     align(f)
 

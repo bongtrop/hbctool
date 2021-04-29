@@ -1,6 +1,7 @@
 import unittest
 from hbctool.util import *
-from hbctool.hbc.hbc74.test import TestHBC74
+from hbctool.hbc.hbc74.test import *
+from hbctool.hbc.hbc59.test import *
 from hbctool import hbc as hbcl, hasm
 import pathlib
 import json
@@ -100,33 +101,6 @@ class TestFileUtilization(unittest.TestCase):
         self.assertEqual(isUTF16, 1)
         self.assertEqual(offset, 465)
         self.assertEqual(length, 3)
-
-class TestParser(unittest.TestCase):
-    def test_hbc(self):
-        f = open(f"{basepath}/hbc/hbc74/example/index.android.bundle", "rb")
-        hbc = hbcl.load(f)
-        f.close()
-        f = open("/tmp/hbctool_test.android.bundle", "wb")
-        hbcl.dump(hbc, f)
-        f.close()
-
-        f = open("hbc/hbc74/example/index.android.bundle", "rb")
-        a = f.read()
-        f.close()
-        f = open("/tmp/hbctool_test.android.bundle", "rb")
-        b = f.read()
-        f.close()
-
-        self.assertEqual(a, b)
-
-    def test_hasm(self):
-        f = open(f"{basepath}/hbc/hbc74/example/index.android.bundle", "rb")
-        a = hbcl.load(f)
-        f.close()
-        hasm.dump(a, "/tmp/hbctool_test", force=True)
-        b = hasm.load("/tmp/hbctool_test")
-
-        self.assertEqual(json.dumps(a.getObj()), json.dumps(b.getObj()))
 
 def main():
     unittest.main()
