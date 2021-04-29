@@ -1,11 +1,11 @@
-import hbc as hbcl
+from hbctool import hbc as hbcl, hasm
 from .translator import assemble, disassemble
 import unittest
 import re
 import pathlib
+import json
 
 basepath = pathlib.Path(__file__).parent.absolute()
-
 class TestHBC74(unittest.TestCase):
     def __init__(self, *args, **kwargs):
         super(TestHBC74, self).__init__(*args, **kwargs)
@@ -68,3 +68,29 @@ class TestHBC74(unittest.TestCase):
             _, _, _, _, bc, _ = self.hbc.getFunction(i, disasm=False)
 
             self.assertEqual(assemble(disassemble(bc)), bc)
+class TestParser74(unittest.TestCase):
+    def test_hbc(self):
+        f = open(f"{basepath}/example/index.android.bundle", "rb")
+        hbc = hbcl.load(f)
+        f.close()
+        f = open("/tmp/hbctool_test.android.bundle", "wb")
+        hbcl.dump(hbc, f)
+        f.close()
+
+        f = open("hbc/hbc74/example/index.android.bundle", "rb")
+        a = f.read()
+        f.close()
+        f = open("/tmp/hbctool_test.android.bundle", "rb")
+        b = f.read()
+        f.close()
+
+        self.assertEqual(a, b)
+
+    def test_hasm(self):
+        f = open(f"{basepath}/example/index.android.bundle", "rb")
+        a = hbcl.load(f)
+        f.close()
+        hasm.dump(a, "/tmp/hbctool_test", force=True)
+        b = hasm.load("/tmp/hbctool_test")
+
+        self.assertEqual(json.dumps(a.getObj()), json.dumps(b.getObj()))

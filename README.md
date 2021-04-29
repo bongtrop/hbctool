@@ -4,11 +4,15 @@
 
 A command-line interface for disassembling and assembling the Hermes Bytecode.
 
-Since the React Native team created their own JavaScript engine (named Hermes) for running the React Native application, the JavaScript source code is often compiled to the Hermes bytecode. In the penetration test project, I found that some React Native applications have already been migrated to the Hermes engine. It is really head for me to analyze or patch those applications. Therefore, I created hbctool for helping any pentester to test the Hermes bytecode.(Now only support Hermes Bytecode version 74). 
+Since the React Native team created their own JavaScript engine (named Hermes) for running the React Native application, the JavaScript source code is often compiled to the Hermes bytecode. In the penetration test project, I found that some React Native applications have already been migrated to the Hermes engine. It is really head for me to analyze or patch those applications. Therefore, I created hbctool for helping any pentester to test the Hermes bytecode.
 
 > [Hermes](https://hermesengine.dev/) is an open-source JavaScript engine optimized for running React Native apps on Android. For many apps, enabling Hermes will result in improved start-up time, decreased memory usage, and smaller app size. At this time Hermes is an opt-in React Native feature, and this guide explains how to enable it.
 
 Special thanks to [ErbaZZ](https://github.com/ErbaZZ) and [Jusmistic](https://github.com/Jusmistic) for helping me research and develop this tool.
+
+For more information, please visit:
+
+[https://suam.wtf/posts/react-native-application-static-analysis-en/](https://suam.wtf/posts/react-native-application-static-analysis-en/)
 
 ## Screenshot
 
@@ -60,7 +64,10 @@ Examples:
 
 ## Support
 
-hbctool currently supports only Hermes Bytecode version 74.
+hbctool currently supports the following Hermes Bytecode version:
+
+- [Hermes Bytecode version 59](/hbctool/hbc/hbc59/)
+- [Hermes Bytecode version 74](/hbctool/hbc/hbc74/)
 
 ## Contribution
 

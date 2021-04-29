@@ -1,0 +1,826 @@
+{
+    "NewObjectWithBuffer": [
+        "Reg8",
+        "UInt16",
+        "UInt16",
+        "UInt16",
+        "UInt16"
+    ],
+    "NewObjectWithBufferLong": [
+        "Reg8",
+        "UInt16",
+        "UInt16",
+        "UInt32",
+        "UInt32"
+    ],
+    "NewObject": [
+        "Reg8"
+    ],
+    "NewObjectWithParent": [
+        "Reg8",
+        "Reg8"
+    ],
+    "NewArrayWithBuffer": [
+        "Reg8",
+        "UInt16",
+        "UInt16",
+        "UInt16"
+    ],
+    "NewArrayWithBufferLong": [
+        "Reg8",
+        "UInt16",
+        "UInt16",
+        "UInt32"
+    ],
+    "NewArray": [
+        "Reg8",
+        "UInt16"
+    ],
+    "Mov": [
+        "Reg8",
+        "Reg8"
+    ],
+    "MovLong": [
+        "Reg32",
+        "Reg32"
+    ],
+    "Negate": [
+        "Reg8",
+        "Reg8"
+    ],
+    "Not": [
+        "Reg8",
+        "Reg8"
+    ],
+    "BitNot": [
+        "Reg8",
+        "Reg8"
+    ],
+    "TypeOf": [
+        "Reg8",
+        "Reg8"
+    ],
+    "Eq": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "StrictEq": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Neq": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "StrictNeq": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Less": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "LessEq": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Greater": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "GreaterEq": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Add": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "AddN": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Mul": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "MulN": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Div": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "DivN": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Mod": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Sub": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "SubN": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "LShift": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "RShift": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "URshift": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "BitAnd": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "BitXor": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "BitOr": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "InstanceOf": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "IsIn": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "GetEnvironment": [
+        "Reg8",
+        "UInt8"
+    ],
+    "StoreToEnvironment": [
+        "Reg8",
+        "UInt8",
+        "Reg8"
+    ],
+    "StoreToEnvironmentL": [
+        "Reg8",
+        "UInt16",
+        "Reg8"
+    ],
+    "StoreNPToEnvironment": [
+        "Reg8",
+        "UInt8",
+        "Reg8"
+    ],
+    "StoreNPToEnvironmentL": [
+        "Reg8",
+        "UInt16",
+        "Reg8"
+    ],
+    "LoadFromEnvironment": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+    ],
+    "LoadFromEnvironmentL": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+    ],
+    "GetGlobalObject": [
+        "Reg8"
+    ],
+    "GetNewTarget": [
+        "Reg8"
+    ],
+    "CreateEnvironment": [
+        "Reg8"
+    ],
+    "DeclareGlobalVar": [
+        "UInt32:S"
+    ],
+    "GetByIdShort": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt8:S"
+    ],
+    "GetById": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16:S"
+    ],
+    "GetByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32:S"
+    ],
+    "TryGetById": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16:S"
+    ],
+    "TryGetByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32:S"
+    ],
+    "PutById": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16:S"
+    ],
+    "PutByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32:S"
+    ],
+    "TryPutById": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt16:S"
+    ],
+    "TryPutByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt8",
+        "UInt32:S"
+    ],
+    "PutNewOwnByIdShort": [
+        "Reg8",
+        "Reg8",
+        "UInt8:S"
+    ],
+    "PutNewOwnById": [
+        "Reg8",
+        "Reg8",
+        "UInt16:S"
+    ],
+    "PutNewOwnByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt32:S"
+    ],
+    "PutNewOwnNEById": [
+        "Reg8",
+        "Reg8",
+        "UInt16:S"
+    ],
+    "PutNewOwnNEByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt32:S"
+    ],
+    "PutOwnByIndex": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+    ],
+    "PutOwnByIndexL": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+    ],
+    "PutOwnByVal": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+    ],
+    "DelById": [
+        "Reg8",
+        "Reg8",
+        "UInt16:S"
+    ],
+    "DelByIdLong": [
+        "Reg8",
+        "Reg8",
+        "UInt32:S"
+    ],
+    "GetByVal": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "PutByVal": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "DelByVal": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "PutOwnGetterSetterByVal": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "UInt8"
+    ],
+    "GetPNameList": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "GetNextPName": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Call": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+    ],
+    "Construct": [
+        "Reg8",
+        "Reg8",
+        "UInt8"
+    ],
+    "Call1": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "CallDirect": [
+        "Reg8",
+        "UInt8",
+        "UInt16"
+    ],
+    "Call2": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Call3": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "Call4": [
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "CallLong": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+    ],
+    "ConstructLong": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+    ],
+    "CallDirectLongIndex": [
+        "Reg8",
+        "UInt8",
+        "UInt32"
+    ],
+    "CallBuiltin": [
+        "Reg8",
+        "UInt8",
+        "UInt8"
+    ],
+    "Ret": [
+        "Reg8"
+    ],
+    "Catch": [
+        "Reg8"
+    ],
+    "DirectEval": [
+        "Reg8",
+        "Reg8"
+    ],
+    "Throw": [
+        "Reg8"
+    ],
+    "ThrowIfUndefinedInst": [
+        "Reg8"
+    ],
+    "Debugger": [],
+    "DebuggerCheckBreak": [],
+    "ProfilePoint": [
+        "UInt16"
+    ],
+    "Unreachable": [],
+    "CreateClosure": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+    ],
+    "CreateClosureLongIndex": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+    ],
+    "CreateGeneratorClosure": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+    ],
+    "CreateGeneratorClosureLongIndex": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+    ],
+    "CreateThis": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "SelectObject": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "LoadParam": [
+        "Reg8",
+        "UInt8"
+    ],
+    "LoadParamLong": [
+        "Reg8",
+        "UInt32"
+    ],
+    "LoadConstUInt8": [
+        "Reg8",
+        "UInt8"
+    ],
+    "LoadConstInt": [
+        "Reg8",
+        "Imm32"
+    ],
+    "LoadConstDouble": [
+        "Reg8",
+        "Double"
+    ],
+    "LoadConstString": [
+        "Reg8",
+        "UInt16:S"
+    ],
+    "LoadConstStringLongIndex": [
+        "Reg8",
+        "UInt32:S"
+    ],
+    "LoadConstUndefined": [
+        "Reg8"
+    ],
+    "LoadConstNull": [
+        "Reg8"
+    ],
+    "LoadConstTrue": [
+        "Reg8"
+    ],
+    "LoadConstFalse": [
+        "Reg8"
+    ],
+    "LoadConstZero": [
+        "Reg8"
+    ],
+    "CoerceThisNS": [
+        "Reg8",
+        "Reg8"
+    ],
+    "LoadThisNS": [
+        "Reg8"
+    ],
+    "ToNumber": [
+        "Reg8",
+        "Reg8"
+    ],
+    "ToInt32": [
+        "Reg8",
+        "Reg8"
+    ],
+    "AddEmptyString": [
+        "Reg8",
+        "Reg8"
+    ],
+    "GetArgumentsPropByVal": [
+        "Reg8",
+        "Reg8",
+        "Reg8"
+    ],
+    "GetArgumentsLength": [
+        "Reg8",
+        "Reg8"
+    ],
+    "ReifyArguments": [
+        "Reg8"
+    ],
+    "CreateRegExp": [
+        "Reg8",
+        "UInt32:S",
+        "UInt32:S",
+        "UInt32"
+    ],
+    "SwitchImm": [
+        "Reg8",
+        "UInt32",
+        "Addr32",
+        "UInt32",
+        "UInt32"
+    ],
+    "StartGenerator": [],
+    "ResumeGenerator": [
+        "Reg8",
+        "Reg8"
+    ],
+    "CompleteGenerator": [],
+    "CreateGenerator": [
+        "Reg8",
+        "Reg8",
+        "UInt16"
+    ],
+    "CreateGeneratorLongIndex": [
+        "Reg8",
+        "Reg8",
+        "UInt32"
+    ],
+    "Jmp": [
+        "Addr8"
+    ],
+    "JmpLong": [
+        "Addr32"
+    ],
+    "JmpTrue": [
+        "Addr8",
+        "Reg8"
+    ],
+    "JmpTrueLong": [
+        "Addr32",
+        "Reg8"
+    ],
+    "JmpFalse": [
+        "Addr8",
+        "Reg8"
+    ],
+    "JmpFalseLong": [
+        "Addr32",
+        "Reg8"
+    ],
+    "JmpUndefined": [
+        "Addr8",
+        "Reg8"
+    ],
+    "JmpUndefinedLong": [
+        "Addr32",
+        "Reg8"
+    ],
+    "SaveGenerator": [
+        "Addr8"
+    ],
+    "SaveGeneratorLong": [
+        "Addr32"
+    ],
+    "JLess": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLess": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessEqualN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JLessEqualNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessEqualN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotLessEqualNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreater": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreater": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterEqualN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JGreaterEqualNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterEqualN": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotGreaterEqualNLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JNotEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JStrictEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JStrictEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ],
+    "JStrictNotEqual": [
+        "Addr8",
+        "Reg8",
+        "Reg8"
+    ],
+    "JStrictNotEqualLong": [
+        "Addr32",
+        "Reg8",
+        "Reg8"
+    ]
+}

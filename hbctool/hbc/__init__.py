@@ -1,6 +1,7 @@
 
 from hbctool.util import *
 from hbctool.hbc.hbc74 import HBC74
+from hbctool.hbc.hbc59 import HBC59
 import json
 
 MAGIC = 2240826417119764422
@@ -11,7 +12,8 @@ INIT_HEADER = {
 BYTECODE_ALIGNMENT = 4
 
 HBC = {
-    74: HBC74
+    74: HBC74,
+    59: HBC59
 }
 
 def load(f):
