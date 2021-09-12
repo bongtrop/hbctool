@@ -1,5 +1,6 @@
 
 from hbctool.util import *
+from hbctool.hbc.hbc76 import HBC76
 from hbctool.hbc.hbc74 import HBC74
 from hbctool.hbc.hbc59 import HBC59
 import json
@@ -12,6 +13,7 @@ INIT_HEADER = {
 BYTECODE_ALIGNMENT = 4
 
 HBC = {
+    76: HBC76,
     74: HBC74,
     59: HBC59
 }
