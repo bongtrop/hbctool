@@ -2,6 +2,7 @@ import unittest
 from hbctool.util import *
 from hbctool.hbc.hbc76.test import *
 from hbctool.hbc.hbc74.test import *
+from hbctool.hbc.hbc62.test import *
 from hbctool.hbc.hbc59.test import *
 from hbctool import hbc as hbcl, hasm
 import pathlib

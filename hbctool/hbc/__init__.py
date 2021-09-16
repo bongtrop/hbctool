@@ -2,6 +2,7 @@
 from hbctool.util import *
 from hbctool.hbc.hbc76 import HBC76
 from hbctool.hbc.hbc74 import HBC74
+from hbctool.hbc.hbc62 import HBC62
 from hbctool.hbc.hbc59 import HBC59
 import json
 
@@ -15,6 +16,7 @@ BYTECODE_ALIGNMENT = 4
 HBC = {
     76: HBC76,
     74: HBC74,
+    62: HBC62,
     59: HBC59
 }
 
