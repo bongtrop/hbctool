@@ -99,3 +99,8 @@ poetry install
 - Create a class abstraction
 - Support overflow patching
 - Do all TODO, NOTE, FIXME in source code
+
+
+## Credits
+
+- [https://github.com/bongtrop : Bongtrop](https://github.com/bongtrop) : For initial commits
