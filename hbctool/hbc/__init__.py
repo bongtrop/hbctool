@@ -3,6 +3,7 @@ from hbctool.util import *
 from hbctool.hbc.hbc89 import HBC89
 from hbctool.hbc.hbc85 import HBC85
 from hbctool.hbc.hbc84 import HBC84
+from hbctool.hbc.hbc83 import HBC83
 from hbctool.hbc.hbc76 import HBC76
 from hbctool.hbc.hbc74 import HBC74
 from hbctool.hbc.hbc62 import HBC62
@@ -20,6 +21,7 @@ HBC = {
     89: HBC89,
     85: HBC85,
     84: HBC84,
+    83: HBC83,
     76: HBC76,
     74: HBC74,
     62: HBC62,
