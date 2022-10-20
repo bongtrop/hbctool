@@ -77,7 +77,7 @@ class TestParser74(unittest.TestCase):
         hbcl.dump(hbc, f)
         f.close()
 
-        f = open("hbc/hbc74/example/index.android.bundle", "rb")
+        f = open("hbctool/hbc/hbc74/example/index.android.bundle", "rb")
         a = f.read()
         f.close()
         f = open("/tmp/hbctool_test.android.bundle", "rb")

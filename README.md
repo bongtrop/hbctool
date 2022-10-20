@@ -1,4 +1,4 @@
-# hbctool 
+# hbctool
 
 [![Python 3.x](https://img.shields.io/badge/python-3.x-yellow.svg)](https://python.org) [![PyPI version](https://badge.fury.io/py/hbctool.svg)](https://badge.fury.io/py/hbctool) [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
 
@@ -78,9 +78,10 @@ Feel free to create an issue or submit the merge request. Anyway you want to con
 However, please run the unit test before submiting the pull request.
 
 ```
-cd hbctool
-python test.py
+python3 test.py
 ```
+
+Note: test.py is moved a level up in directory structure to correctly refer
 
 I use poetry to build this tool. To build it yourself, simply execute:
 
