@@ -15,6 +15,7 @@ INIT_HEADER = {
 BYTECODE_ALIGNMENT = 4
 
 HBC = {
+    85: HBC84,
     84: HBC84,
     76: HBC76,
     74: HBC74,
