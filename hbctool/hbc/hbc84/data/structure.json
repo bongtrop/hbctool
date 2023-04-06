@@ -16,11 +16,12 @@
         "arrayBufferSize": ["uint", 32, 1],
         "objKeyBufferSize": ["uint", 32, 1],
         "objValueBufferSize": ["uint", 32, 1],
-        "cjsModuleOffset": ["uint", 32, 1],
+        "segmentID": ["uint", 32, 1],
         "cjsModuleCount": ["uint", 32, 1],
+        "functionSourceCount": ["uint", 32, 1],
         "debugInfoOffset": ["uint", 32, 1],
         "option": ["uint", 8, 1],
-        "padding": ["uint", 8, 31]
+        "padding": ["uint", 8, 27]
     },
     "SmallFuncHeader": {
         "offset": ["bit", 25, 1],
@@ -67,5 +68,9 @@
     "CJSModuleTable": {
         "first": ["uint", 32, 1],
         "second": ["uint", 32, 1]
+    },
+    "FunctionSourceTable": {
+        "funId": ["uint", 32, 1],
+        "stringId": ["uint", 32, 1]
     }
 }
