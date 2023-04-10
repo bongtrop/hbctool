@@ -25,6 +25,7 @@ objValueBufferS = structure["ObjValueBuffer"]
 regExpTableEntryS = structure["RegExpTableEntry"]
 regExpStorageS = structure["RegExpStorage"]
 cjsModuleTableS = structure["CJSModuleTable"]
+funSourceTableS = structure["FunctionSourceTable"]
 
 def align(f):
     f.pad(BYTECODE_ALIGNMENT)
@@ -163,11 +164,24 @@ def parse(f):
     obj["cjsModuleTable"] = cjsModuleTable
     align(f)
 
+
+    # Segment 14: FunctionSourceTable
+    # Not doing anything with this data right now; just advancing the file 
+    # pointer
+    
+    funSourceTable = []
+    for _ in range(header["functionSourceCount"]):
+        funSourceEntry = {}
+        for key in funSourceTableS:
+            funSourceEntry[key] = read(f, funSourceTableS[key])
+
+        funSourceTable.append(funSourceEntry)
+    align(f)
+
     obj["instOffset"] = f.tell()
     obj["inst"] = f.readall()
 
     return obj
-
 def export(obj, f):
     # Segment 1: Header
     header = obj["header"]
@@ -279,6 +293,10 @@ def export(obj, f):
             write(f, cjsModuleEntry[key], cjsModuleTableS[key])
         
     align(f)
+
+    # Segment 14: FunctionSourceTable
+    # TODO: Currently FunctionSourceTable data is NOT USED! This will break
+    # assembly if the source HBC file has entries for this table
 
     # Write remaining
     f.writeall(obj["inst"])
