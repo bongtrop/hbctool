@@ -84,9 +84,9 @@ python test.py
 
 I use poetry to build this tool. To build it yourself, simply execute:
 
-```
-poetry install
-```
+1. `poetry install`
+2. `poetry build`
+4. `pip install --force-reinstall dist/hbctool-<VERSION>-py3-none-any.whl`
 
 ## Next Step
 
