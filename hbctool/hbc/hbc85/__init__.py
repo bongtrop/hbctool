@@ -31,7 +31,7 @@ class HBC85:
         self.obj = obj
 
     def getVersion(self):
-        return 84   
+        return 85   
 
     def getHeader(self):
         return self.getObj()["header"]

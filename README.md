@@ -70,6 +70,9 @@ hbctool currently supports the following Hermes Bytecode version:
 - [Hermes Bytecode version 62](/hbctool/hbc/hbc62/)
 - [Hermes Bytecode version 74](/hbctool/hbc/hbc74/)
 - [Hermes Bytecode version 76](/hbctool/hbc/hbc76/)
+- [Hermes Bytecode version 84](/hbctool/hbc/hbc84/)
+- [Hermes Bytecode version 85](/hbctool/hbc/hbc85/)
+- [Hermes Bytecode version 90](/hbctool/hbc/hbc90/)
 
 ## Contribution
 

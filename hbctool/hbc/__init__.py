@@ -6,6 +6,7 @@ from hbctool.hbc.hbc76 import HBC76
 from hbctool.hbc.hbc74 import HBC74
 from hbctool.hbc.hbc62 import HBC62
 from hbctool.hbc.hbc59 import HBC59
+from hbctool.hbc.hbc90 import HBC90
 import json
 
 MAGIC = 2240826417119764422
@@ -16,6 +17,7 @@ INIT_HEADER = {
 BYTECODE_ALIGNMENT = 4
 
 HBC = {
+    90: HBC90,
     85: HBC85,
     84: HBC84,
     76: HBC76,
