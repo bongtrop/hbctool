@@ -22,9 +22,12 @@ stringStorageS = structure["StringStorage"]
 arrayBufferS = structure["ArrayBuffer"]
 objKeyBufferS = structure["ObjKeyBuffer"]
 objValueBufferS = structure["ObjValueBuffer"]
+bigIntTableEntryS = structure["BigIntTableEntry"]
+bigIntStorageS = structure["BigIntStorage"]
 regExpTableEntryS = structure["RegExpTableEntry"]
 regExpStorageS = structure["RegExpStorage"]
 cjsModuleTableS = structure["CJSModuleTable"]
+funSourceTableS = structure["FunctionSourceTable"]
 
 def align(f):
     f.pad(BYTECODE_ALIGNMENT)
@@ -132,6 +135,25 @@ def parse(f):
     obj["objValueBuffer"] = objValueBuffer
     align(f)
 
+    # Segment XX: BigIntTable
+    bigIntTable = []
+    for _ in range(header["bigIntCount"]):
+        bigIntEntry = {}
+        for key in bigIntTableEntryS:
+            bigIntEntry[key] = read(f, bigIntTableEntryS[key])
+
+        bigIntTable.append(bigIntEntry)
+
+    obj["bigIntTable"] = bigIntTable
+    align(f)
+
+    # Segment XX: BigIntStorage
+    bigIntStorageS[2] = header["bigIntStorageSize"]
+    bigIntStorage = read(f, bigIntStorageS)
+
+    obj["bigIntStorage"] = bigIntStorage
+    align(f)
+
     # Segment 11: RegExpTable
     regExpTable = []
     for _ in range(header["regExpCount"]):
@@ -161,6 +183,20 @@ def parse(f):
         cjsModuleTable.append(cjsModuleEntry)
 
     obj["cjsModuleTable"] = cjsModuleTable
+    align(f)
+
+    # Segment 14: FunctionSourceTable
+    # Not doing anything with this data right now; just advancing the file
+    # pointer
+    funSourceTable = []
+    for _ in range(header["functionSourceCount"]):
+        funSourceEntry = {}
+        for key in funSourceTableS:
+            funSourceEntry[key] = read(f, funSourceTableS[key])
+
+        funSourceTable.append(funSourceEntry)
+
+    obj["funSourceTable"] = funSourceTable
     align(f)
 
     obj["instOffset"] = f.tell()
@@ -278,6 +314,15 @@ def export(obj, f):
         for key in cjsModuleTableS:
             write(f, cjsModuleEntry[key], cjsModuleTableS[key])
         
+    align(f)
+
+    # Segment 14: FunctionSourceTable
+    funSourceTable = obj["funSourceTable"]
+    for i in range(header["functionSourceCount"]):
+        funSourceEntry = funSourceTable[i]
+        for key in funSourceTableS:
+            write(f, funSourceEntry[key], funSourceTableS[key])
+
     align(f)
 
     # Write remaining

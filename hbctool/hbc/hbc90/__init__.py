@@ -13,7 +13,7 @@ ByteStringTag = 6 << 4
 IntegerTag = 7 << 4
 TagMask = 0x70
 
-class HBC85:
+class HBC90:
     def __init__(self, f=None):
         if f:
             self.obj = parse(f)
@@ -31,7 +31,7 @@ class HBC85:
         self.obj = obj
 
     def getVersion(self):
-        return 84   
+        return 90   
 
     def getHeader(self):
         return self.getObj()["header"]
