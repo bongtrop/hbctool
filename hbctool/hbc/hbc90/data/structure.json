@@ -71,7 +71,7 @@
         "first": ["uint", 32, 1],
         "second": ["uint", 32, 1]
     },
-    "BigIntTableEntry":: {
+    "BigIntTableEntry": {
         "offset": ["uint", 32, 1],
         "length": ["uint", 32, 1]
     },
