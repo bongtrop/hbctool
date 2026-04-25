@@ -24,7 +24,6 @@ Examples:
     hbctool disasm index.android.bundle test_hasm
     hbctool asm test_hasm index.android.bundle
 """
-from docopt import docopt
 from hbctool import metadata, hbc, hasm
 
 def disasm(hbcfile, hasmpath):
@@ -56,6 +55,8 @@ def asm(hasmpath, hbcfile):
     print(f"[*] Done")
 
 def main():
+    from docopt import docopt
+
     args = docopt(__doc__, version=f"{metadata.project} {metadata.version}")
     if args['disasm']:
         disasm(args['<HBC_FILE>'], args['<HASM_PATH>'])
