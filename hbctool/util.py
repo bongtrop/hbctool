@@ -60,6 +60,13 @@ class BitWriter(object):
         return v
 
     def flush(self):
+        # Only emit a byte when there are pending bits. Finalization (via
+        # __del__/__exit__) may call flush() with nothing accumulated; without
+        # this guard it would write a spurious 0x00 at the current position,
+        # which corrupts the output when the last write was a seek-back (e.g.
+        # patching overflowed function headers).
+        if self.bcount == 0 and self.accumulator == 0:
+            return
         self.out.write(bytes([self.accumulator]))
         self.accumulator = 0
         self.bcount = 0

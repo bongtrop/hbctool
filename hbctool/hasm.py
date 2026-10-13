@@ -89,7 +89,7 @@ def read_all_func(hasm, hbc):
 def read_func(func_asms, i):
     func_asm = func_asms[i]
 
-    m = re.search(r"Function<.*?>([0-9]+)\(([0-9]+) params, ([0-9]+) registers,\s?([0-9]+) symbols\):\n(.+?)\nEndFunction", func_asm, re.DOTALL)
+    m = re.search(r"Function<.*?>([0-9]+)\(([0-9]+) params, ([0-9]+) registers,\s?([0-9]+) symbols\):\n(.*?)\n?EndFunction", func_asm, re.DOTALL)
     assert m, f"Malicious function header: {func_asm}"
 
     functionName = m.group(1)
