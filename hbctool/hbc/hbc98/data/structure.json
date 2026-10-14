@@ -1,0 +1,93 @@
+{
+    "header": {
+        "magic": ["uint", 64, 1],
+        "version": ["uint", 32, 1],
+        "sourceHash": ["uint", 8, 20],
+        "fileLength": ["uint", 32, 1],
+        "globalCodeIndex": ["uint", 32, 1],
+        "functionCount": ["uint", 32, 1],
+        "stringKindCount": ["uint", 32, 1],
+        "identifierCount": ["uint", 32, 1],
+        "stringCount": ["uint", 32, 1],
+        "overflowStringCount": ["uint", 32, 1],
+        "stringStorageSize": ["uint", 32, 1],
+        "bigIntCount": ["uint", 32, 1],
+        "bigIntStorageSize": ["uint", 32, 1],
+        "regExpCount": ["uint", 32, 1],
+        "regExpStorageSize": ["uint", 32, 1],
+        "literalValueBufferSize": ["uint", 32, 1],
+        "objKeyBufferSize": ["uint", 32, 1],
+        "objShapeTableCount": ["uint", 32, 1],
+        "numStringSwitchImms": ["uint", 32, 1],
+        "segmentID": ["uint", 32, 1],
+        "cjsModuleCount": ["uint", 32, 1],
+        "functionSourceCount": ["uint", 32, 1],
+        "debugInfoOffset": ["uint", 32, 1],
+        "option": ["uint", 8, 1],
+        "padding": ["uint", 8, 15]
+    },
+    "SmallFuncHeader": {
+        "offset": ["bit", 25, 1],
+        "paramCount": ["bit", 5, 1],
+        "loopDepth": ["bit", 2, 1],
+        "bytecodeSizeInBytes": ["bit", 14, 1],
+        "functionName": ["bit", 8, 1],
+        "numberRegCount": ["bit", 5, 1],
+        "nonPtrRegCount": ["bit", 5, 1],
+        "frameSize": ["bit", 8, 1],
+        "readCacheSize": ["bit", 8, 1],
+        "writeCacheSize": ["bit", 7, 1],
+        "privateNameCacheSize": ["bit", 1, 1],
+        "flags": ["uint", 8, 1]
+    },
+    "FuncHeader": {
+        "offset": ["uint", 32, 1],
+        "paramCount": ["uint", 32, 1],
+        "loopDepth": ["uint", 32, 1],
+        "bytecodeSizeInBytes": ["uint", 32, 1],
+        "functionName": ["uint", 32, 1],
+        "numberRegCount": ["uint", 32, 1],
+        "nonPtrRegCount": ["uint", 32, 1],
+        "frameSize": ["uint", 32, 1],
+        "readCacheSize": ["uint", 8, 1],
+        "writeCacheSize": ["uint", 8, 1],
+        "privateNameCacheSize": ["uint", 8, 1],
+        "flags": ["uint", 8, 1]
+    },
+    "SmallStringTableEntry": {
+        "isUTF16": ["bit", 1, 1],
+        "offset": ["bit", 23, 1],
+        "length": ["bit", 8, 1]
+    },
+    "OverflowStringTableEntry": {
+        "offset": ["uint", 32, 1],
+        "length": ["uint", 32, 1]
+    },
+    "StringKindEntry": ["uint", 32, 0],
+    "IdentifierHash": ["uint", 32, 0],
+    "StringStorage": ["uint", 8, 0],
+    "LiteralValueBuffer": ["uint", 8, 0],
+    "ObjKeyBuffer": ["uint", 8, 0],
+    "ShapeTableEntry": {
+        "keyBufferOffset": ["uint", 32, 1],
+        "numProps": ["uint", 32, 1]
+    },
+    "BigIntTableEntry": {
+        "offset": ["uint", 32, 1],
+        "length": ["uint", 32, 1]
+    },
+    "BigIntStorage": ["uint", 8, 0],
+    "RegExpTableEntry": {
+        "offset": ["uint", 32, 1],
+        "length": ["uint", 32, 1]
+    },
+    "RegExpStorage": ["uint", 8, 0],
+    "CJSModuleTable": {
+        "first": ["uint", 32, 1],
+        "second": ["uint", 32, 1]
+    },
+    "FunctionSourceTable": {
+        "first": ["uint", 32, 1],
+        "second": ["uint", 32, 1]
+    }
+}
